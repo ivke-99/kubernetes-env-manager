@@ -1,0 +1,24 @@
+version: '3.8'
+
+networks:
+  kubernetes-env-manager:
+    name:  kubernetes-env-manager
+
+
+services:
+  kubernetes-env-manager:
+    build:
+      context: ./
+      args:
+        - APP_VERSION
+        - APP_DIR=kubernetes-env-manager
+    image: ${REGISTRY}/kubernetes-env-manager:${APP_VERSION}
+    container_name: kubernetes-env-manager
+    env_file:
+      - .env
+    networks:
+      kubernetes-env-manager:
+        aliases:
+          - rest_api
+    ports:
+      - "8080:80"

@@ -1,0 +1,7 @@
+fastapi==0.100.0
+pydantic==2.0.3
+uvicorn==0.23.1
+mrkutil==1.1.4
+pyjwt==2.8.0
+python-multipart==0.0.6
+kubernetes==27.2.0
