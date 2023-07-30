@@ -1,6 +1,6 @@
 from .common import BaseResponseSchema, ValidationErrorResponseSchema
 from .auth import LoginSchema, TokenSchema
-from .configmap import ConfigMapSchema
+from .configmap import ConfigMapSchema, ConfigMapUpdateSchema
 
 __all__ = [
     "BaseResponseSchema",
@@ -8,4 +8,5 @@ __all__ = [
     "LoginSchema",
     "TokenSchema",
     "ConfigMapSchema",
+    "ConfigMapUpdateSchema",
 ]

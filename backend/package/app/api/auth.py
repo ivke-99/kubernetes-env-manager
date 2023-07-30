@@ -13,7 +13,7 @@ auth_router = APIRouter(
 
 
 @auth_router.post("/login/", response_model=TokenSchema | BaseResponseSchema)
-async def login_post_view(form_data: LoginSchema, response: Response):
+async def login(form_data: LoginSchema, response: Response):
     is_valid = AuthManager.check_credentials(form_data.username, form_data.password)
     if is_valid:
         token = AuthManager.create_access_token()

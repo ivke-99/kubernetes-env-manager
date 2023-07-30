@@ -6,12 +6,12 @@ logger = logging.getLogger(__name__)
 
 
 class BaseResponseSchema(BaseModel):
-    message: str = Field(...)
+    message: str
     errors: dict | None = Field(None)
 
-    def dict(self, *args, **kwargs) -> dict[str, any]:
+    def model_dump(self, *args, **kwargs) -> dict[str, any]:
         kwargs.pop('exclude_none', None)
-        return super().dict(*args, exclude_none=True, **kwargs)
+        return super().model_dump(*args, exclude_none=True, **kwargs)
 
 
 class ValidationErrorResponseSchema(BaseModel):

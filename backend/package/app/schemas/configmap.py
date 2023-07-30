@@ -6,8 +6,8 @@ class ConfigMapSchema(BaseModel):
     name: str
     data: Dict[str, str]
 
-    class Config:
-        json_schema_extra = {
+    model_config = {
+        "json_schema_extra": {
             "example": [
                 {
                     "name": "front-config",
@@ -22,3 +22,12 @@ class ConfigMapSchema(BaseModel):
                 },
             ]
         }
+    }
+
+
+class ConfigMapUpdateSchema(BaseModel):
+    data: Dict[str, str]
+
+    model_config = {
+        "json_schema_extra": {"example": {"data": {"some_key": "some_value"}}}
+    }
