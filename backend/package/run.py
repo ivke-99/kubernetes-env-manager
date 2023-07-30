@@ -1,21 +1,54 @@
-from mrkutil.logging import get_logging_config
-
 from uvicorn import run
 import os
 import logging
 import logging.config
 
-
 log_level = os.getenv("LOG_LEVEL", "DEBUG")
-develop = bool('true' == str(os.getenv("DEVELOP", 'false')).lower())
-json_format = bool('true' == str(os.getenv("JSON_FORMAT", 'false')).lower())
-
-logging_config = get_logging_config(log_level, json_format, True)
+logging_config = {
+    "version": 1,
+    "disable_exiting_loggers": True,
+    "formatters": {
+        "default": {
+            "format": "%(asctime)s] %(levelname)s in %(module)s - %(name)s: %(message)s",
+        },
+    },
+    "loggers": {
+        "multipart": {"level": "ERROR", "handlers": ["console"], "propagate": False},
+        "main": {"level": log_level, "handlers": ["console"]},
+        "app": {"level": log_level, "handlers": ["console"]},
+        "package": {"level": log_level, "handlers": ["console"]},
+        "uvicorn": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+        "uvicorn.error": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "uvicorn.access": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": log_level,
+            "class": "logging.StreamHandler",
+            "formatter": "default",
+        }
+    },
+}
 logger = logging.getLogger("main")
 
 
 def dev():
-    run("package.app.start:app", host="0.0.0.0", port=8080, reload=True, log_level=log_level.lower(), log_config=logging_config)
+    run(
+        "package.app.start:app",
+        host="0.0.0.0",
+        port=8080,
+        reload=True,
+        log_level=log_level.lower(),
+        log_config=logging_config,
+    )
 
 
 def prod():
@@ -34,7 +67,7 @@ def prod():
         port=80,
         log_level=log_level.lower(),
         log_config=logging_config,
-        forwarded_allow_ips="*"
+        forwarded_allow_ips="*",
     )
 
 

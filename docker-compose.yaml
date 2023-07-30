@@ -6,14 +6,14 @@ networks:
 
 
 services:
-  kubernetes-env-manager:
+  kubernetes-env-manager-backend:
     build:
       context: ./
       args:
         - APP_VERSION
-        - APP_DIR=kubernetes-env-manager
-    image: ${REGISTRY}/kubernetes-env-manager:${APP_VERSION}
-    container_name: kubernetes-env-manager
+        - APP_DIR=backend
+    image: ${REGISTRY}/kubernetes-env-manager-backend:${APP_VERSION}
+    container_name:kubernetes-env-manager-backend
     env_file:
       - .env
     networks:

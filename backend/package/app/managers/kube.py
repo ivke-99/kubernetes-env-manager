@@ -5,7 +5,7 @@ from kubernetes import client, config
 
 class KubernetesManager:
     COMMONLY_IGNORED_CONFIGMAPS = ["kube-root-ca.crt"]
-    DEFAULT_NAMESPACE = os.getenv("DEFAULT_NAMESPACE", "default")
+    DEFAULT_NAMESPACE = os.getenv("KUBE_DEFAULT_NAMESPACE", "default")
     IN_CLUSTER = bool("true" == str(os.getenv("IN_CLUSTER", "false")).lower())
 
     def __init__(self):

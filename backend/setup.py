@@ -20,17 +20,9 @@ setup(
     packages=find_packages(exclude=["doc"]),
     # source code layout
     namespace_packages=["package"],
-
     # Generating the command-line tool
-    entry_points={
-        "console_scripts": [
-            "kubernetes-env-manager=package.run:prod"
-        ]
-    },
+    entry_points={"console_scripts": ["kubernetes-env-manager=package.run:prod"]},
     # author and license
     author="Ivan Djuraki",
     author_email="ivandjuraki@protonmail.com",
-    #  PyTest integration
-    setup_requires=["pytest-runner"],
-    tests_require=["pytest", "mock"]
 )
