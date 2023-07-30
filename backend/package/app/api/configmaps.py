@@ -20,6 +20,11 @@ async def get_configmaps():
     return manager.get_configmaps()
 
 
+@configmap_router.get("/{configmap_name}/", response_model=ConfigMapSchema)
+async def get_configmap(configmap_name: str):
+    return manager.get_configmap(configmap_name, should_format=True)
+
+
 @configmap_router.post("/", response_model=BaseResponseSchema)
 async def create_configmap(response: Response, configmap: ConfigMapSchema = Body(...)):
     try:

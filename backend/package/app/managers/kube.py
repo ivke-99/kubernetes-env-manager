@@ -34,15 +34,18 @@ class KubernetesManager:
         )
         for item in configmaps.items:
             if item.metadata.name not in self.COMMONLY_IGNORED_CONFIGMAPS:
-                formatted_configmaps.append(
-                    {"name": item.metadata.name, "data": item.data}
-                )
+                formatted_configmaps.append({"name": item.metadata.name})
         return formatted_configmaps
 
-    def get_configmap(self, configmap_name: str) -> client.V1ConfigMap:
-        return self.api.read_namespaced_config_map(
+    def get_configmap(
+        self, configmap_name: str, should_format=False
+    ) -> client.V1ConfigMap | dict:
+        configmap = self.api.read_namespaced_config_map(
             configmap_name, self.DEFAULT_NAMESPACE
         )
+        if should_format:
+            return {"name": configmap.metadata.name, "data": configmap.data}
+        return configmap
 
     def create_configmap(self, configmap_dict: dict):
         configmap = client.V1ConfigMap(
