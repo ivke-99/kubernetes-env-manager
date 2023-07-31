@@ -3,7 +3,7 @@ from typing import List
 
 from fastapi import APIRouter, Body, Response
 from app.managers import KubernetesManager
-from app.schemas import ConfigMapSchema, ConfigMapUpdateSchema, BaseResponseSchema
+from app.schemas import ConfigMapSchema, ConfigMapUpdateSchema, BaseResponseSchema, ConfigMapListSchema
 from kubernetes.client import ApiException
 
 logger = logging.getLogger(__name__)
@@ -15,7 +15,7 @@ configmap_router = APIRouter(
 manager = KubernetesManager()
 
 
-@configmap_router.get("/", status_code=201, response_model=List[ConfigMapSchema])
+@configmap_router.get("/", status_code=201, response_model=List[ConfigMapListSchema])
 async def get_configmaps():
     return manager.get_configmaps()
 
