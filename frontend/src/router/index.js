@@ -11,7 +11,8 @@ const router = createRouter({
       component: ConfigMapsView
     },
     {
-      path: `/config-map/:name`,
+      path: `/config-map/:name?`,
+      props: true,
       name: 'configmap-add-edit',
       component: ConfigMapAddEditView,
     }

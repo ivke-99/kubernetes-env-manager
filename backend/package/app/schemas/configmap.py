@@ -21,7 +21,7 @@ class ConfigMapListSchema(BaseModel):
 
 class ConfigMapSchema(BaseModel):
     name: str
-    data: Dict[str, str]
+    data: Dict[str, str] | None
 
     model_config = {
         "json_schema_extra": {
@@ -34,7 +34,7 @@ class ConfigMapSchema(BaseModel):
 
 
 class ConfigMapUpdateSchema(BaseModel):
-    data: Dict[str, str]
+    data: Dict[str, str] | None
 
     model_config = {
         "json_schema_extra": {"example": {"data": {"some_key": "some_value"}}}

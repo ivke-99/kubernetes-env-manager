@@ -1,16 +1,9 @@
 <script setup>
-import { useRouter } from 'vue-router'
-
 defineProps(['id'])
-const router = useRouter()
+const emit = defineEmits(['mapClick']);
 
 function onButtonClick(id) {
-    router.push({
-        name: 'configmap-add-edit',
-        params: {
-            name: id
-        }
-    })
+    emit("mapClick", id)
 }
 </script>
 <template>
@@ -21,6 +14,15 @@ function onButtonClick(id) {
 <style scoped>
 .card-wrapper {
     background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    margin: 10px;
+}
+
+.card-wrapper:hover {
+    background-color: rgb(0, 189, 126);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 20px;

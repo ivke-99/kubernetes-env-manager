@@ -3,7 +3,12 @@ from typing import List
 
 from fastapi import APIRouter, Body, Response
 from app.managers import KubernetesManager
-from app.schemas import ConfigMapSchema, ConfigMapUpdateSchema, BaseResponseSchema, ConfigMapListSchema
+from app.schemas import (
+    ConfigMapSchema,
+    ConfigMapUpdateSchema,
+    BaseResponseSchema,
+    ConfigMapListSchema,
+)
 from kubernetes.client import ApiException
 
 logger = logging.getLogger(__name__)
@@ -20,9 +25,15 @@ async def get_configmaps():
     return manager.get_configmaps()
 
 
-@configmap_router.get("/{configmap_name}/", response_model=ConfigMapSchema)
-async def get_configmap(configmap_name: str):
-    return manager.get_configmap(configmap_name, should_format=True)
+@configmap_router.get(
+    "/{configmap_name}/", response_model=ConfigMapSchema | BaseResponseSchema
+)
+async def get_configmap(response: Response, configmap_name: str):
+    try:
+        return manager.get_configmap(configmap_name, should_format=True)
+    except ApiException:
+        response.status_code = 404
+        return {"message": "Configmap not found."}
 
 
 @configmap_router.post("/", response_model=BaseResponseSchema)
