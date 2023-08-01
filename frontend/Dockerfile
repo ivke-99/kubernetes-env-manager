@@ -5,7 +5,8 @@ COPY package.json package-lock.json /app/
 RUN npm install --silent
 COPY ./src /app/src
 COPY ./public /app/public
-COPY ./vite.config.js /app/
+COPY ./vite.config.js /app/vite.config.js
+COPY ./index.html  /app/index.html
 RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx

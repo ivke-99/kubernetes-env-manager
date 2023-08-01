@@ -63,14 +63,16 @@ function submitChanges() {
         errors.value.push("Configmap name cannot be empty.")
         return;
     }
+    let isValid = true
     configMap.value.data.forEach(item => {
         for (const [key] of Object.entries(item)) {
             if (key === "") {
                 errors.value.push("Some fields in data are empty.")
-                return;
+                isValid = false
             }
         }
     })
+    if (!isValid) return
     if (hasDuplicateKeys(configMap.value)) {
         errors.value.push("Duplicate keys in data.")
         return;
