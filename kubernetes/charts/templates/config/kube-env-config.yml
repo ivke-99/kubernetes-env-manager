@@ -1,0 +1,15 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: kube-env-config
+data:
+  LOG_LEVEL: "DEBUG"
+  KUBE_USERNAME: "ivke"
+  KUBE_PASSWORD: "ivke"
+  KUBE_APP_SECRET: "fkapksgposakgpoasga"
+  IN_CLUSTER: "true"
+  KUBE_DEFAULT_NAMESPACE: "default"
+  KUBE_BACKEND_URL: "http://localhost:8080/api"
+  ALLOWED_HOSTS: '*'
+  IGNORED_CONFIGMAPS: "kube-root-ca.crt"

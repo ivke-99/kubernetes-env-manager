@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kube-backend
+  name: kube-backend
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: kube-backend
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: kube-backend
+        app: kube-backend
+        proj: kube-env-manager
+    spec:
+      containers:
+      - image: 'registry.git.nosolutions.rs/vhire/vhire-backend/kubernetes-env-manager-backend:{{ .Values.app_version }}'
+        name: kube-backend
+        envFrom:
+        - configMapRef:
+            name: kube-env-config
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 5
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources: {}
+      imagePullSecrets:
+      - name: regcred
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kube-backend
+    app: kube-backend
+  name: kube-backend
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: kube-backend
+

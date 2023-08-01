@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kube-front
+  name: kube-front
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: kube-front
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: kube-front
+        app: kube-front
+        proj: kube-env-manager
+    spec:
+      containers:
+      - image: 'registry.git.nosolutions.rs/vhire/vhire-backend/kubernetes-env-manager-frontend:{{ .Values.app_version }}'
+        name: kube-front
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: kube-env-config
+        ports:
+        - containerPort: 3000
+        resources: {}
+      imagePullSecrets:
+      - name: regcred
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kube-front
+    app: kube-front
+  name: kube-front
+spec:
+  ports:
+  - name: "3000"
+    port: 80
+    targetPort: 3000
+    protocol: TCP
+  selector:
+    app: kube-front

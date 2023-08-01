@@ -4,7 +4,7 @@ from kubernetes import client, config
 
 
 class KubernetesManager:
-    COMMONLY_IGNORED_CONFIGMAPS = ["kube-root-ca.crt"]
+    IGNORED_CONFIGMAPS = os.getenv("IGNORED_CONFIGMAPS", []).split(",")
     DEFAULT_NAMESPACE = os.getenv("KUBE_DEFAULT_NAMESPACE", "default")
     IN_CLUSTER = bool("true" == str(os.getenv("IN_CLUSTER", "false")).lower())
 
@@ -33,7 +33,7 @@ class KubernetesManager:
             self.DEFAULT_NAMESPACE, pretty=True, watch=False
         )
         for item in configmaps.items:
-            if item.metadata.name not in self.COMMONLY_IGNORED_CONFIGMAPS:
+            if item.metadata.name not in self.IGNORED_CONFIGMAPS:
                 formatted_configmaps.append({"name": item.metadata.name})
         return formatted_configmaps
 
