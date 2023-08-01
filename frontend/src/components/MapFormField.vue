@@ -14,7 +14,7 @@ function deleteEntry() {
 <template>
     <div class="config-map-wrapper">
         <input class="config-key" :value="Object.keys(modelValue)[0]"
-            @input="updateModelValue({ [$event.target.value]: Object.values(modelValue)[0] })" />
+            @input="updateModelValue({ [$event.target.value]: Object.values(modelValue)[0] })" required />
         <input class="config-val" :value="Object.values(modelValue)[0]"
             @input="updateModelValue({ [Object.keys(modelValue)[0]]: $event.target.value })" />
         <button @click="deleteEntry">DELETE</button>

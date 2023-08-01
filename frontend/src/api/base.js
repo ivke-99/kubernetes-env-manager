@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuthStore } from '@/stores/auth.js';
 
 // default api request settings
 const instance = axios.create({
@@ -9,7 +10,7 @@ const instance = axios.create({
 instance.defaults.headers.common['Content-Type'] = 'application/json';
 instance.defaults.headers.common['Accept'] = 'application/json';
 
-export function setAxiosToken(token) {
+export function setAuthAxiosToken(token) {
   if (token) {
     instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   } else {
@@ -19,7 +20,8 @@ export function setAxiosToken(token) {
 
 export function parseErrorResponse(error) {
   if (error?.response?.status === 401) {
-    console.log("should logout")
+    const store = useAuthStore()
+    store.deleteAxiosToken()
   }
   else if (error.request.responseType === 'blob' && error.response.data instanceof Blob) {
     return new Promise((resolve, reject) => {
@@ -53,6 +55,11 @@ export function parseErrorResponse(error) {
 }
 
 export function setupInterceptors() {
+  const store = useAuthStore()
+  let token = store?.token
+  if (token) {
+    setAuthAxiosToken(token)
+  }
   instance.interceptors.response.use(
     (response) => {
       return response;

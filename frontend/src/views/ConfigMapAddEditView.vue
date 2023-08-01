@@ -64,8 +64,8 @@ function submitChanges() {
         return;
     }
     configMap.value.data.forEach(item => {
-        for (const [key, value] of Object.entries(item)) {
-            if (key === "" || value === "") {
+        for (const [key] of Object.entries(item)) {
+            if (key === "") {
                 errors.value.push("Some fields in data are empty.")
                 return;
             }
@@ -110,7 +110,7 @@ function submitChanges() {
         <h1 class="form-title">Add/Edit a configmap</h1>
         <h2 class="form-errors" v-for="error in errors" :key="error">{{ error }}</h2>
         <h2>Configmap name</h2>
-        <input v-model="configMap.name" placeholder="Configmap Name">
+        <input v-model="configMap.name" placeholder="Configmap Name" required>
         <h2>Configmap data</h2>
         <div class="form-items-wrapper">
             <div v-for="(item, index) in configMap.data" :key="index">

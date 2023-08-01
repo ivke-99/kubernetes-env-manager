@@ -10,6 +10,5 @@ setupInterceptors()
   <header>
     <AppNavigation />
   </header>
-
   <RouterView />
 </template>

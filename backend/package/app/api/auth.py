@@ -1,8 +1,8 @@
 import logging
 
 from fastapi import Response, APIRouter
-from app.managers import AuthManager
-from app.schemas import TokenSchema, BaseResponseSchema, LoginSchema
+from package.app.managers import AuthManager
+from package.app.schemas import TokenSchema, BaseResponseSchema, LoginSchema
 
 logger = logging.getLogger(__name__)
 
