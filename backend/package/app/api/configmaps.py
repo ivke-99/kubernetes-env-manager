@@ -21,13 +21,20 @@ configmap_router = APIRouter(
 manager = KubernetesManager()
 
 
-@configmap_router.get("/", status_code=201, response_model=List[ConfigMapListSchema], dependencies=[Depends(JWTBearer())])
+@configmap_router.get(
+    "/",
+    status_code=201,
+    response_model=List[ConfigMapListSchema],
+    dependencies=[Depends(JWTBearer())],
+)
 async def get_configmaps():
     return manager.get_configmaps()
 
 
 @configmap_router.get(
-    "/{configmap_name}/", response_model=ConfigMapSchema | BaseResponseSchema
+    "/{configmap_name}/",
+    response_model=ConfigMapSchema | BaseResponseSchema,
+    dependencies=[Depends(JWTBearer())],
 )
 async def get_configmap(response: Response, configmap_name: str):
     try:
@@ -37,7 +44,9 @@ async def get_configmap(response: Response, configmap_name: str):
         return {"message": "Configmap not found."}
 
 
-@configmap_router.post("/", response_model=BaseResponseSchema, dependencies=[Depends(JWTBearer())])
+@configmap_router.post(
+    "/", response_model=BaseResponseSchema, dependencies=[Depends(JWTBearer())]
+)
 async def create_configmap(response: Response, configmap: ConfigMapSchema = Body(...)):
     try:
         response = manager.create_configmap(configmap)
@@ -47,7 +56,11 @@ async def create_configmap(response: Response, configmap: ConfigMapSchema = Body
     return {"message": "Success!"}
 
 
-@configmap_router.put("/{configmap_name}/", response_model=BaseResponseSchema, dependencies=[Depends(JWTBearer())])
+@configmap_router.put(
+    "/{configmap_name}/",
+    response_model=BaseResponseSchema,
+    dependencies=[Depends(JWTBearer())],
+)
 async def update_configmap(
     response: Response,
     configmap_name: str,

@@ -35,7 +35,7 @@ spec:
         - configMapRef:
             name: kube-env-config
         ports:
-        - containerPort: 3000
+        - containerPort: 80
         resources: {}
       imagePullSecrets:
       - name: regcred
@@ -55,9 +55,9 @@ metadata:
   name: kube-front
 spec:
   ports:
-  - name: "3000"
+  - name: "80"
     port: 80
-    targetPort: 3000
+    targetPort: 80
     protocol: TCP
   selector:
     app: kube-front
