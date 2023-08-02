@@ -1,19 +1,40 @@
 <template>
-    <div class="login">
-        <h2>Login</h2>
-        <form @submit.prevent="handleSubmit">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" v-model="state.username" required autocomplete="username" />
+    <section class="vh-50">
+        <div class="container py-5 h-50">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+
+                            <div class="mb-md-5 mt-md-4 pb-5">
+
+                                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                                <p class="text-white-50 mb-5">Please enter your username and password!</p>
+                                <div v-if="error">
+                                    <p class="text-danger mb-5">{{ error }}</p>
+                                </div>
+                                <div class="form-outline form-white mb-4">
+                                    <input id="username" v-model="state.username" class="form-control form-control-lg" />
+                                    <label class="form-label" for="username">Username</label>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <input type="password" v-model="state.password" id="password"
+                                        class="form-control form-control-lg" />
+                                    <label class="form-label" for="password">Password</label>
+                                </div>
+
+
+                                <button class="btn btn-outline-light btn-lg px-5" type="submit"
+                                    @click="handleSubmit">Login</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" v-model="state.password" required autocomplete="current-password" />
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <div v-if="error" class="error">{{ error }}</div>
-    </div>
+        </div>
+    </section>
 </template>
   
 <script setup>
@@ -40,42 +61,3 @@ const handleSubmit = () => {
 
 };
 </script>
-  
-<style>
-.login {
-    margin: 0 auto;
-    max-width: 300px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.login h2 {
-    margin-bottom: 10px;
-}
-
-.login label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.login input {
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 10px;
-}
-
-.login button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.login .error {
-    color: red;
-    margin-top: 10px;
-}
-</style>

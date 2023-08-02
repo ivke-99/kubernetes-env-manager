@@ -1,3 +1,39 @@
+<template>
+    <div class="container min-vh-100">
+        <div class="row">
+            <div v-if="isNotFound">
+                <h1 class="alert alert-danger">ConfigMap not found.</h1>
+            </div>
+            <form v-else class="form-wrapper d-flex align-items-center flex-column w-100"
+                style="background: rgba(255, 255, 255, 0.8); border-radius: 8px; padding: 20px;" @submit.prevent="">
+                <div class="alert alert-danger" v-for="error in errors" :key="error">{{ error }}</div>
+                <div class="form-group w-100">
+                    <div class="row">
+                        <div class="col-5">
+                            <h2>Configmap name</h2>
+                            <input id="configMapName" class="form-control" v-model="configMap.name"
+                                placeholder="Configmap Name" required>
+                        </div>
+                    </div>
+                    <h2 class="mt-3">Configmap data</h2>
+                    <div class="row mb-1" v-for="(item, index) in configMap.data" :key="index">
+                        <MapFormField v-model="configMap.data[index]" :index="index" @deleteItem="onFormFieldDeleted">
+                        </MapFormField>
+                    </div>
+                    <div class="d-flex justify-content-center m-5">
+                        <button class="btn btn-primary m-1 btn-lg" @click="addEntry">Add new row</button>
+                        <button class="btn btn-success submit-button m-1 btn-lg" type="submit"
+                            v-dialog="{ yes: submitChanges, no: () => { } }">
+                            Submit changes
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
+  
+  
 <script setup>
 import MapFormField from '../components/MapFormField.vue';
 import { ref, onMounted } from 'vue';
@@ -104,63 +140,3 @@ function submitChanges() {
 }
 
 </script>
-<template>
-    <div v-if="isNotFound">
-        <h1>ConfigMap not found. </h1>
-    </div>
-    <div v-else class="form-wrapper">
-        <h1 class="form-title">Add/Edit a configmap</h1>
-        <h2 class="form-errors" v-for="error in errors" :key="error">{{ error }}</h2>
-        <h2>Configmap name</h2>
-        <input v-model="configMap.name" placeholder="Configmap Name" required>
-        <h2>Configmap data</h2>
-        <div class="form-items-wrapper">
-            <div v-for="(item, index) in configMap.data" :key="index">
-                <MapFormField v-model="configMap.data[index]" :index="index" @deleteItem="onFormFieldDeleted">
-                </MapFormField>
-            </div>
-        </div>
-        <button @click="addEntry">Add new row</button>
-        <button class="submit-button" v-dialog="{
-            yes: submitChanges,
-            no: () => { }
-        }">Submit changes</button>
-    </div>
-</template>
-<style scoped>
-.form-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.form-wrapper button,
-.form-wrapper input,
-.form-wrapper h2 {
-    align-self: center;
-    font-size: 18px;
-}
-
-.form-items-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.form-errors {
-    background-color: #6b1a1a;
-}
-
-.form-title {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-    font-size: 24px;
-}
-
-.submit-button {
-    background-color: olive;
-    font-size: 30px !important;
-}
-</style>

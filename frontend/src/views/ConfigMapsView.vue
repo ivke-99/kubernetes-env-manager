@@ -27,29 +27,12 @@ function onAddClick(id) {
 </script>
 
 <template>
-  <div class="header-wrapper">
-    <button @click="onAddClick()">Add a configmap</button>
-  </div>
-  <div class="configmaps">
-    <ConfigCard v-for="map in configMaps" :key="map?.name" :id="map?.name" @map-click="onAddClick" />
+  <div class="container text-center">
+    <button type="button" class="btn btn-light mb-5 mt-5 btn-lg" @click="onAddClick()">Add a configmap</button>
+    <div class="row row-cols-2">
+      <div class="col" v-for="map in configMaps" :key="map?.name" :id="map?.name">
+        <ConfigCard :id="map?.name" @map-click="onAddClick" />
+      </div>
+    </div>
   </div>
 </template>
-
-<style scoped>
-.configmaps {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.header-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 25px;
-}
-
-.header-wrapper button {
-  font-size: 25px;
-}
-</style>

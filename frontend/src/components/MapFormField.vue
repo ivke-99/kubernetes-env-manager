@@ -12,27 +12,15 @@ function deleteEntry() {
 </script>
 
 <template>
-    <div class="config-map-wrapper">
-        <input class="config-key" :value="Object.keys(modelValue)[0]"
+    <div class="col-5">
+        <input class="form-control" :value="Object.keys(modelValue)[0]" placeholder="Key"
             @input="updateModelValue({ [$event.target.value]: Object.values(modelValue)[0] })" required />
-        <input class="config-val" :value="Object.values(modelValue)[0]"
+    </div>
+    <div class="col-5">
+        <input class="form-control" :value="Object.values(modelValue)[0]" placeholder="Value"
             @input="updateModelValue({ [Object.keys(modelValue)[0]]: $event.target.value })" />
-        <button @click="deleteEntry">DELETE</button>
+    </div>
+    <div class="col-2">
+        <button type="button" class="btn btn-danger" @click="deleteEntry">DELETE</button>
     </div>
 </template>
-<style scoped>
-.config-map-wrapper {
-    display: flex;
-}
-
-.config-key,
-.config-val {
-    padding: 5px;
-    width: 400px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    margin: 1px;
-}
-</style>

@@ -17,7 +17,6 @@ function onButtonClick(id) {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 20px;
-    width: 300px;
     margin: 10px;
 }
 
@@ -26,7 +25,6 @@ function onButtonClick(id) {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 20px;
-    width: 300px;
     margin: 10px;
 }
 
